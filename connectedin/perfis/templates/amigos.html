@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="col-lg-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>{{ perfil_logado.contatos.count}} Amigos</strong>
+		</div>
+
+		<ul  class="list-group">
+			{% with total_contatos=perfil_logado.contatos.count %}
+				{% if total_contatos %}
+					{% for contato in perfil_logado.contatos.all %}
+						<li class="list-group-item">
+							{{ contato.nome }}
+							<a href="{% url 'exibir' contato.id%}" data-toggle="tooltip" title="Visualizar Perfil" class="pull-right">
+								<span class="glyphicon glyphicon-eye-open"/>
+							</a>
+						</li>
+					{% endfor %}
+				{% else %}
+					<li class="list-group-item">
+						<p>Nenhum contato :(</p>
+					</li>
+				{% endif %}
+			{% endwith %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

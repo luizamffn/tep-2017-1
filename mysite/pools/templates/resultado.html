@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% block body %}
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">
+              <strong>{{question.question_text}}</strong>
+          </div>
+
+          <table class="table">
+             <tr>
+	    		<th>Resposta</th>
+				<th>Votos</th>
+				<th>Percentual</th>
+			</tr>
+
+			{% for c in question.choices.all %}
+			<tr>
+				<td>{{ c.choice_text}}</td>
+                <td>{{ c.votes}}</td>
+                <td>{% widthratio c.votes  total 100%} %</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+
+          <!--<ul class="list-group">-->
+           <!--{% for c in question.choices.all %}-->
+              <!--<li class="list-group-item">{{ c.choice_text}} - {% widthratio c.votes  total 100%} %</li>-->
+           <!--{% endfor %}-->
+          <!--</ul>-->
+
+        </div>
+	</div>
+{% endblock %}
+

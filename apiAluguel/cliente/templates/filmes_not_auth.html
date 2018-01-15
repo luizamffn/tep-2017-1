@@ -1,0 +1,52 @@
+{% extends 'base_not_auth.html'%}
+{% block body%}
+<div id="app_filme" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <div class="card-tabs">
+        <div class="card-panel blue-grey lighten-3 center-align" style="padding:2px"><h4>Filmes</h4></div>
+    </div>
+
+    <table class="centered">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Gênero</th>
+        </tr>
+        </thead>
+
+        <tbody v-for='filme in filmes'>
+        <tr>
+            <td>[[filme.nome]]</td>
+            <td>[[filme.valor]]</td>
+            <td>[[filme.categoria]]</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block script%}
+<script>
+	var app = new Vue({
+	    el: '#app_filme',
+	    delimiters: ['[[', ']]'],
+		data : {
+			filmes: [],
+		},
+		mounted () {
+            this.obterFilmes();
+		},
+        methods : {
+            obterFilmes : function(){
+                axios.get('http://localhost:8000/filmes/')
+                .then(function (response) {
+                    app.filmes = response.data.results
+                })
+                .catch(e => {
+                    app.errors = e
+                })
+            },
+        }
+	})
+</script>
+{% endblock %}

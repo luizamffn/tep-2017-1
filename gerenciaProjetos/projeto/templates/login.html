@@ -1,0 +1,117 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Gerencia Projetos</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'css/materialize.min.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'css/styles.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col m3"></div>
+        <div class="col m6">
+            <h2 class="center-align">Login</h2>
+            <div class="row">
+                <form action="{% url 'login' %}" class="form-signin" role="form" method="post">
+		{% csrf_token %}
+
+		<input type="text" class="form-control" id="id_username" name="username" placeholder="Nome" required autofocus>
+
+		<input type="password" class="form-control" id="id_password" name="password" placeholder="Senha" required>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">Login</button>
+
+		<input type="hidden" name="next" value="{{ next }}">
+
+		{% if form.errors %}
+			<div class="alert alert-danger">
+				<button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+				Por favor, verifique o Email e/ou Senha informados
+			</div>
+		{% endif %}
+
+
+	</form>
+                <!--<form class="col s12" action="{% url 'login' %}" class="form-signin" role="form" method="post">-->
+                    <!--{% csrf_token %}-->
+                    <!--<div class="row">-->
+                        <!--<div class="input-field col s12">-->
+                            <!--<input id="username" type="text" class="form-control" required>-->
+                            <!--<label for="username">Username</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="input-field col s12">-->
+                            <!--<input id="password" type="password" class="form-control" required>-->
+                            <!--<label for="password">Password</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col s12">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input type="checkbox" id="remember">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<label for="remember">Remember me</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="divider"></div>&ndash;&gt;-->
+                    <!--<div class="row">-->
+                        <!--<div class="col m12">-->
+                            <!--<p class="right-align">-->
+                                <!--<a href="">-->
+                                    <!--<button class="btn btn-large waves-effect waves-light" type="button" name="action">-->
+                                        <!--Login-->
+                                    <!--</button>-->
+                                <!--</a>-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<input type="hidden" name="next" value="{{ next }}">-->
+
+		<!--{% if form.errors %}-->
+			<!--<div class="alert alert-danger">-->
+				<!--<button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+				<!--Por favor, verifique o Email e/ou Senha informados-->
+			<!--</div>-->
+		<!--{% endif %}-->
+                <!--</form>-->
+            </div>
+        </div>
+        <div class="col m3"></div>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script src="{% static 'js/materialize.min.js' %}"></script>
+<script src="{% static 'js/init.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+    <!--$(document).ready(function(){-->
+      <!--$('.carousel').carousel();-->
+    <!--});-->
+
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+
+    <!--&lt;!&ndash;$(document).ready(function(){&ndash;&gt;-->
+      <!--&lt;!&ndash;$('[name=telefone]').mask('(00) 0000-0000');&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--$(document).ready(function(){-->
+      <!--// the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered-->
+      <!--$('.modal').modal();-->
+    <!--});-->
+
+</script>
+</html>

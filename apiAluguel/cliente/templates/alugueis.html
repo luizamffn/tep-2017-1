@@ -1,0 +1,111 @@
+{% extends 'base_auth.html'%}
+{% block body%}
+<div id="app_aluguel">
+    <div class="card-tabs">
+        <div class="card-panel blue-grey lighten-3 center-align" style="padding:2px"><h4>Alugueis</h4></div>
+    </div>
+
+    <table class="centered">
+        <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Filme</th>
+            <th>Valor</th>
+            <th>Data de devolucao</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+
+        <tbody v-for='aluguel in alugueis'>
+        <tr>
+            <td>[[aluguel.cliente]]</td>
+            <td>[[aluguel.filme]]</td>
+            <td>[[aluguel.valor]]</td>
+            <td>[[aluguel.dataPrevistaDevolucao]]</td>
+            <td>
+                <a href="" @click="deletarAluguel(aluguel)" title="Apagar" class="red-text"><i
+                        class="material-icons prefix">delete</i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large green modal-trigger" href="#novo_aluguel"><i class="material-icons">add</i></a>
+    </div>
+
+    <div id="novo_aluguel" class="modal">
+        <div class="modal-content">
+            <h4 class="center main-text">Adicionar novo aluguel</h4>
+            <form class="form-signin" role="form" method="post">
+
+                <!--<div class="row">-->
+                    <!--<div class="col s12">-->
+                        <!--<div class="input-field col s12">-->
+                            <!--<input name="name" id="name" type="text" placeholder="Descrição" v-model="genero.descricao"-->
+                                   <!--required>-->
+                            <!--&lt;!&ndash;<label for="name">Descricao</label>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="input-field col s12 center">-->
+                        <!--<button class="btn waves-effect waves-light main-color" @click.prevent="cadastrarGenero">Salvar-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script%}
+<script>
+    let token = localStorage.getItem('token')
+    let config = {'Authorization': 'Token ' + token};
+	var app = new Vue({
+	    el: '#app_aluguel',
+	    delimiters: ['[[', ']]'],
+		data : {
+			alugueis: [],
+            aluguel: {descricao: ""}
+		},
+		mounted () {
+		    if(localStorage.getItem('token') == 'null'){
+				window.location = "{% url 'permission'%}"
+			}else{
+                axios.get('http://localhost:8000/alugueis/', {headers: config})
+                .then(function (response) {
+                    app.alugueis = response.data.results
+                })
+                .catch(e => {
+                    app.errors = e
+                })
+            }
+		},
+        methods : {
+            cadastrarAluguel : function(){
+                axios.post("http://localhost:8000/alugueis/", app.aluguel, {headers: config})
+                .then(function(response){
+                    Materialize.toast('Aluguel criado com sucesso')
+                    app.alugueis.push(response.data)
+                })
+                .catch(e => {
+                    app.errors = e
+                })
+            },
+            deletarAluguel : function(aluguel) {
+              var index = app.alugueis.indexOf(aluguel)
+
+              axios.delete('http://localhost:8000/aluguel/'+ aluguel.id + '/', {headers: config})
+                .then(function(response) {
+                    app.alugueis.splice(index,1)
+                })
+                .catch(e => {
+                  console.log(e)
+                })
+            },
+        }
+	})
+</script>
+{% endblock %}

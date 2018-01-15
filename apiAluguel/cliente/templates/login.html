@@ -1,0 +1,75 @@
+{% extends 'base_not_auth.html'%}
+{% block body %}
+
+<div class="row center" id="app">
+    <div class="col s0 m3 l3"></div>
+
+    <div class="col s12 m6 l6">
+        <form>
+            <h4 class="main-text">Login</h4>
+            <br>
+            <div class="row center">
+                <div class="col s12">
+                    <div class="input-field">
+                        <input type="text" id="id_username" v-model="user.username" class="validate"
+                               placeholder="Username" required>
+                        <!--<label for="id_username" class="active">Username</label>-->
+                    </div>
+                </div>
+
+                <div class="col s12">
+                    <div class="input-field">
+                        <input type="password" id="id_password" v-model="user.password" class="validate"
+                               placeholder="Senha" required>
+                        <!--<label for="id_password">Password</label>-->
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="container">
+                <div class="row center">
+                    <button @click.prevent="logar_user(user)" class="btn main-color btn-primary">Logar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col s0 m3 l3"></div>
+</div>
+
+<script type="text/javascript">
+	var app = new Vue({
+		el: '#app',
+		data : {
+			user : {username : "",email : ""},
+			response : "",
+			errors : "",
+		},
+		mounted() {
+	        console.log(this.user.username)
+	        console.log(this.user.password)
+	        <!--console.log(localStorage.setItem('token', null))-->
+	        console.log(localStorage.getItem('token'))
+			if(localStorage.getItem('token') != 'null'){
+				window.location = "{% url 'home'%}"
+			}
+	    },
+		methods : {
+			logar_user : function(user){
+				axios.post("http://localhost:8000/api-token-auth/login/", {'username' : user.username, 'password' : user.password})
+				.then(function(response){
+					localStorage.setItem('token',response.data.token)
+					localStorage.setItem('username', user.username)
+					app.token = true
+					location.reload();
+				})
+				.catch(function (error) {
+				    console.log(error);
+				});
+			}
+		}
+	})
+
+</script>
+
+{% endblock %}

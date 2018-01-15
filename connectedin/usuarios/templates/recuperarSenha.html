@@ -1,0 +1,47 @@
+{% extends "base_usuario.html" %}
+
+{% block body %}
+<form class = "form-signin"  method="post"
+	action="{% url 'recuperarSenha' %}">
+	{% csrf_token %}
+
+	<h2 class="form-signin-heading">Recuperar Senha</h2>
+
+	<input 	name="nome" id = "id_nome" class = "form-control"
+			placeholder="Nome *" required autofocus>
+	<hr/>
+
+	<input 	name="telefone" id = "id_telefone" class = "form-control"
+			placeholder="Telefone *" required>
+
+	<input 	name="nome_empresa" id = "id_nome_empresa"
+			class = "form-control" placeholder="Empresa *"  required>
+
+	<hr/>
+
+	<label>Pergunta de segurança</label>
+	<select name="pergunta" class = "form-control">
+            <option value="1">Onde você nasceu?</option>
+            <option value="2">Qual é o nome da sua mãe?</option>
+            <option value="3">Qual é o nome do seu melhor amigo?</option>
+    </select>
+
+	<label for="id_resposta">Resposta de segurança</label>
+	<input name="resposta" id = "id_resposta"
+			class = "form-control" placeholder="Resposta *" required>
+
+	<button class="btn btn-lg btn-primary btn-block"
+			type = "submit" value="Login">Recuperar</button>
+
+	{% if form.errors %}
+	<div class="alert alert-danger">
+		<button type="button" class="close"
+				data-dismiss="alert" aria-hidden="true">
+		</button>
+		{{ form.non_field_errors }}
+	</div>
+	{% endif %}
+</form>
+
+
+{% endblock %}

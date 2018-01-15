@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col s12">
+    <table class="highlight">
+
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Project</th>
+        <th>Responsable</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      {% if tasks %}
+      {% for task in tasks %}
+      <tr>
+        <td>{{task.name}}</td>
+        <td>{{task.project.name}}</td>
+        <td>{{task.responsable.name}}</td>
+        <td class="row vallign right-align">
+          <div class="btn-group-h">
+            {% if not task.done %}
+            <a href="{% url 'check_task' task.id %}" class="btn-flat img-btn tooltipped" data-position="bottom"
+               data-delay="50"
+               data-tooltip="Check"><i class="material-icons amber-text">check_box_outline_blank</i></a>
+            {% else %}
+            <a href="{% url 'uncheck_task' task.id %}" class="btn-flat img-btn tooltipped" data-position="bottom"
+               data-delay="50"
+               data-tooltip="Uncheck"><i class="material-icons green-text">check_box</i></a>
+            {% endif %}
+            <a href="{% url 'delete_task' task.id %}" class="btn-flat img-btn tooltipped" data-position="bottom"
+               data-delay="50"
+               data-tooltip="Delete"><i class="material-icons red-text">delete</i></a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <td colspan="4" class="center">Nothing to show.</td>
+      {% endif %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="fixed-action-btn horizontal">
+  <a class="btn-floating btn-large blue modal-trigger" href="#new_task">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+<div id="new_task" class="modal">
+  <div class="modal-content">
+    <h4 class="center main-text">Start new task</h4>
+    <form action="{% url 'new_task' %}" class="form-signin" role="form" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s12">
+            <input name="name" id="name" type="text" required>
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field col s6">
+            <select name="project_id" required>
+              {% for project in projects %}
+              <option value="{{project.id}}">{{project.name}}</option>
+              {% endfor %}
+            </select>
+            <label>Projeto</label>
+          </div>
+          <div class="input-field col s6">
+            <select name="responsable_id" required>
+              {% for person in people %}
+              <option value="{{person.id}}">{{person.name}}</option>
+              {% endfor %}
+            </select>
+            <label>Responsável</label>
+          </div>
+        </div>
+        <div class="input-field col s12 center">
+          <button class="btn waves-effect waves-light main-color" type="submit" name="action">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

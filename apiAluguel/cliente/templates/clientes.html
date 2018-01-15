@@ -1,0 +1,122 @@
+{% extends 'base_auth.html'%}
+{% block body%}
+<div id="app_cliente">
+    <div class="card-tabs">
+        <div class="card-panel blue-grey lighten-3 center-align" style="padding:2px"><h4>Clientes</h4></div>
+    </div>
+
+    <table class="centered">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data Nascimento</th>
+            <th>CPF</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+
+        <tbody v-for='cliente in clientes'>
+        <tr>
+            <td>[[cliente.nome]]</td>
+            <td>[[cliente.dataNasc]]</td>
+            <td>[[cliente.cpf]]</td>
+            <td>
+                <a href="" @click="deletarCliente(cliente)" title="Apagar" class="red-text"><i
+                        class="material-icons prefix">delete</i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large green modal-trigger" href="#novo_cliente"><i class="material-icons">add</i></a>
+    </div>
+
+    <div id="novo_cliente" class="modal">
+        <div class="modal-content">
+            <h4 class="center main-text">Adicionar novo cliente</h4>
+            <form class="form-signin" role="form" method="post">
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12">
+                            <input name="name" id="name" type="text" placeholder="Nome" v-model="cliente.nome"
+                                   required>
+                            <!--<label for="name">Descricao</label>-->
+                        </div>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="input-field col s6">
+                            <input name="cpf" id="cpf" type="text" placeholder="CPF" v-model="cliente.cpf"
+                                   required>
+                            <!--<label for="name">Descricao</label>-->
+                        </div>
+                        <div class="input-field col s6">
+                            <input name="dataNasc" id="dataNasc" type="date" placeholder="Data de Nascimento" v-model="cliente.dataNasc"
+                                   required>
+                            <!--<label for="name">Descricao</label>-->
+                        </div>
+                    </div>
+
+                    <div class="input-field col s12 center">
+                        <button class="btn waves-effect waves-light main-color" @click.prevent="cadastrarCliente">Salvar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script%}
+<script>
+    let token = localStorage.getItem('token')
+    let config = {'Authorization': 'Token ' + token};
+	var app = new Vue({
+	    el: '#app_cliente',
+	    delimiters: ['[[', ']]'],
+		data : {
+			clientes: [],
+            cliente: {nome: ""}
+		},
+		mounted () {
+		    if(localStorage.getItem('token') == 'null'){
+				window.location = "{% url 'permission'%}"
+			}else{
+                axios.get('http://localhost:8000/clientes/', {headers: config})
+                .then(function (response) {
+                    app.clientes = response.data.results
+                })
+                .catch(e => {
+                    app.errors = e
+                })
+            }
+		},
+        methods : {
+            cadastrarCliente : function(){
+                axios.post("http://localhost:8000/clientes/", app.cliente, {headers: config})
+                .then(function(response){
+                    Materialize.toast('Cliente criado com sucesso')
+                    app.clientes.push(response.data)
+                })
+                .catch(e => {
+                    app.errors = e
+                })
+            },
+            deletarCliente : function(cliente) {
+              var index = app.clientes.indexOf(cliente)
+
+              axios.delete('http://localhost:8000/cliente/'+ cliente.id + '/', {headers: config})
+                .then(function(response) {
+                    app.clientes.splice(index,1)
+                })
+                .catch(e => {
+                  console.log(e)
+                })
+            },
+        }
+	})
+</script>
+{% endblock %}

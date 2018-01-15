@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+    <form class = "form-signin"  method="post" action="{% url 'confimarDesativacao' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="justificativa">Por que você quer desativar este perfil?</label>
+            <input name="justificativa" type="text" class="form-control" id="justificativa" placeholder="Justificativa">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Desativar Perfil</button>
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close"
+                    data-dismiss="alert" aria-hidden="true">
+            </button>
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        </form>
+{% endblock %}

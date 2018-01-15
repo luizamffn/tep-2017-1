@@ -1,0 +1,57 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang = "pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>ConnectedIn</title>
+		<link rel="stylesheet" href="{% static 'styles/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'styles/main.css' %}">
+	</head>
+	<body style="margin-left:19%;margin-right:19%;">
+		<div class="container-fluid" >
+			<div class = "header">
+				<ul class = "nav nav-pills pull-right">
+					<li>
+						<form method="post" class="navbar-form" role="search" action="{% url 'buscarUsuario' %}">
+						  {% csrf_token %}
+						  <div class="form-group">
+							<input id="nome" name="nome" type="text" class="form-control" placeholder="Nome Usuário" required>
+						  </div>
+						  <button type="submit" class="btn btn-default">Pesquisar</button>
+						</form>
+					</li>
+					<li><a href = "{% url 'exibir' perfil_logado.id %}">{{ perfil_logado.nome }}</a></li>
+					<li><a href = "{% url 'convites' %}" title="Solicitação de amizade">
+							<span class="glyphicon glyphicon-heart-empty"></span>
+							<strong>{{ perfil_logado.convites_recebidos.count }}</strong>
+						</a>
+					</li>
+					<li><a href = "{% url 'amigos' %}" title="Amigos">
+							<span class="glyphicon glyphicon-user"></span>
+							<strong>{{ perfil_logado.contatos.count }}</strong>
+						</a>
+					</li>
+					<li><a href = "/configuracoes/" title="Configurações">
+						<span class="glyphicon glyphicon-cog"></span></a>
+					</li>
+					<li><a href = "/logout/">Logout</a></li>
+				</ul>
+				<a href = "{% url 'index' %}"><h3 class = "text-muted">ConnectedIn</h3></a>
+			</div>
+
+			<div class="row content">
+				<div class="row">
+					<div class="col-md-1">
+					</div>
+					<div class="col-md-10">
+						{% block body%}
+						{% endblock %}
+					</div>
+					<div class="col-md-1">
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>

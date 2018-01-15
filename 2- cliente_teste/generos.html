@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Aluguel</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="vue.min.js"></script>
+    <script src="axios.min.js"></script>
+</head>
+<body>
+<header>
+    <nav class="blue-grey" role="navigation">
+        <div class="nav-wrapper container">
+            <!--<a id="logo-container" href="{% url 'index'%}" class="brand-logo">-->
+            <!--<img src="{% static 'img/icon2.png' %}" alt="" style="width:60px">-->
+            <!--&lt;!&ndash;Home&ndash;&gt;-->
+            <!--</a>-->
+            <ul class="right hide-on-med-and-down">
+                <li><a class='dropdown-button' href='#' data-activates='dropdown1'><i class="material-icons prefix">reorder</i></a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="" style="color:#263238">Cliente</a></li>
+                        <li><a href="">Aluguel</a></li>
+                        <li><a href="">Filme</a></li>
+                        <!--<li><a></a></li>-->
+                    </ul>
+                </li>
+
+                <li>
+                    <a class="dropdown-button right" href="#!" data-activates="dropdown2">Clara
+                        <i class="material-icons right" style="margin:0px">arrow_drop_down</i>
+                    </a>
+
+                    <ul id='dropdown2' class='dropdown-content'>
+                        <li><a href="{% url 'perfilNutricionista' %}" style="color:#263238">Perfil</a></li>
+                        <li><a href="{% url 'login' %}">Sair</a></li>
+                        <!--<li><a href="#!">Alimento</a></li>-->
+                    </ul>
+                </li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="#">Aluguel</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container" id="app">
+        <table class="centered">
+            <thead>
+            <tr>
+                <th colspan="3">Gêneros</th>
+            </tr>
+            <tr>
+                <th>Descricão</th>
+            </tr>
+            </thead>
+
+            <tbody v-for='genero in generos'>
+            <tr>
+                <td>{{genero.descricao}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large green modal-trigger" href="#novo_genero"><i class="material-icons">add</i></a>
+        </div>
+
+        <div id="novo_genero" class="modal">
+            <div class="modal-content">
+                <h4 class="center main-text">Adicionar novo gênero</h4>
+                <form action="{% url 'new_person' %}" class="form-signin" role="form" method="post">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="input-field col s12">
+                                <input name="name" id="name" type="text" required>
+                                <label for="name">Descricao</label>
+                            </div>
+                        </div>
+
+                        <div class="input-field col s12 center">
+                            <button class="btn waves-effect waves-light main-color" type="submit" name="action">Salvar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script src="static/js/materialize.js"></script>
+<script src="static/js/materialize.min.js"></script>
+<script src="static/js/init.js"></script>
+<script src="static/js/custom.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+    });
+</script>
+
+<script type="text/javascript">
+	var app = new Vue({
+	    el: '#app',
+		data : {
+			generos: []
+		},
+		mounted () {
+			axios.get('http://localhost:8000/generos/')
+			.then(function (response) {
+				app.generos = response.data.results
+			})
+			.catch(e => {
+				app.errors = e
+			})
+		}
+	})
+
+</script>
+
+</body>
+</html>

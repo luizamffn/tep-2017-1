@@ -1,0 +1,123 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.picker__date-display,
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
+  background-color: #546e7a !important;
+}
+.picker__day.picker__day--today,
+.picker__close,
+.picker__today,
+.picker__clear {
+  color: #546e7a !important;
+}
+
+.input-field input[type=text]:focus + label {
+  color: #546e7a !important;
+}
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+.input-field input[type=password]:focus + label {
+  color: #546e7a !important;
+}
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+.input-field input[type=email]:focus + label {
+  color: #546e7a !important;
+}
+.input-field input[type=email]:focus {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+.input-field input[type=number]:focus + label {
+  color: #546e7a !important;
+}
+.input-field input[type=number]:focus {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+.input-field textarea.materialize-textarea:focus + label {
+  color: #546e7a !important;
+}
+.input-field textarea.materialize-textarea:focus {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+
+.input-field .prefix.active {
+  color: #546e7a !important;
+}
+
+.main-text{
+  color: #546e7a !important;
+}
+
+.main-color {
+  background-color: #546e7a !important;
+}
+
+header, main, footer {
+  padding-left: 150px;
+}
+
+@media only screen and (min-width: 993px) {
+  .content{
+    margin-left: 325px;
+    margin-right: 25px;
+  }
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+nav ul li.active {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+
+ul.dropdown-content.select-dropdown li span {
+    color: #546e7a;
+}
+
+td a {
+  display: block;
+}
+
+
+.img-btn {
+  padding: 0 5px;
+  background-color: transparent;
+}
+
+.img-btn:focus, .img-btn:hover {
+  background-color: transparent;
+}
+
+.progress {
+  background-color: #ffb74d !important;
+}
+
+.progress .determinate {
+  background-color: #f57c00 !important;
+}

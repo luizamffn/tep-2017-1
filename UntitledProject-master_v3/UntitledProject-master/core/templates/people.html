@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col s12">
+    <table>
+
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Function</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      {% if people %}
+      {% for person in people %}
+      <tr>
+        <td>{{person.name}}</a></td>
+        <td>$ {{person.salary}}</a></td>
+        <td>{{person.function}}</a></td>
+        <td class="row vallign right-align"><a href="{% url 'delete_person' person.id %}"
+                                               class="btn-flat img-btn tooltipped" data-position="bottom"
+                                               data-delay="50"
+                                               data-tooltip="Delete"><i class="material-icons red-text">delete</i></a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <td colspan="4" class="center">Nothing to show.</td>
+      {% endif %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="fixed-action-btn horizontal">
+  <a class="btn-floating btn-large blue modal-trigger" href="#new_person">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+</div>
+
+<div id="new_person" class="modal">
+  <div class="modal-content">
+    <h4 class="center main-text">Create new person</h4>
+    <form action="{% url 'new_person' %}" class="form-signin" role="form" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s12">
+            <input name="name" id="name" type="text" required>
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field col s6">
+            <input name="salary" id="salary" type="number" required>
+            <label for="salary">Salary</label>
+          </div>
+          <div class="input-field col s6">
+            <input name="function" id="function" type="text" required>
+            <label for="function">Function</label>
+          </div>
+        </div>
+        <div class="input-field col s12 center">
+          <button class="btn waves-effect waves-light main-color" type="submit" name="action">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div>
+
+</div>
+
+</div>
+{% endblock %}

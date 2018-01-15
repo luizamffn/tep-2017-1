@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="col-lg-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Todos os Perfis</strong>
+		</div>
+
+		<ul  class="list-group">
+			{% with total_contatos=perfis.count %}
+				{% if total_contatos %}
+					{% for perfil in perfis %}
+						<li class="list-group-item">
+							{{ perfil.nome }}
+							<a href="{% url 'exibir' perfil.id%}" data-toggle="tooltip" title="Visualizar Perfil" class="pull-right">
+								<span class="glyphicon glyphicon-eye-open"/>
+							</a>
+						</li>
+					{% endfor %}
+				{% else %}
+					<li class="list-group-item">
+						<p>Nenhum perfil encontrado :(</p>
+					</li>
+				{% endif %}
+			{% endwith %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

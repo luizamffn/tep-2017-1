@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Teste Vue</title>
+	<script src="vue.min.js"></script>
+	<script src="axios.min.js"></script>
+	<style type="text/css">
+		body{font-family: arial;}
+		h1{border-bottom: 1px dotted gray;}
+		.body{text-align: justify;}
+		.user{text-align: right; font-style: italic;}
+		.post{width: 80%}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="post" v-for = 'post in posts'>
+			<h1>{{post.title}}</h1>
+			<p class="body">{{post.body}}</p>
+			<p class="user">{{post.user}}</p>
+		</div>
+
+
+
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data : {
+				posts : [
+
+				]
+			},
+			mounted () {
+				axios.get('http://localhost:8000/posts/')
+				.then(function (response) {
+					app.posts = response.data
+				})
+				.catch(e => {
+					app.errors = e
+				})
+			},
+			methods : {
+				
+				
+			}
+		})
+	</script>
+
+	
+
+
+</body>
+</html>

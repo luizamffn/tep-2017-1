@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block body %}
+    <form class = "form-signin"  method="post" action="{% url 'salvarAlteracao' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <input name="postagem_id"  TYPE="hidden" class="form-control" id="postagem_id"
+                    value="{{postagem_id}}" readonly="true" >
+            <input name="postagem" type="text" class="form-control" id="postagem"
+                    value="{{descricao}}" placeholder="Justificativa">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Alterar</button>
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close"
+                    data-dismiss="alert" aria-hidden="true">
+            </button>
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        </form>
+{% endblock %}

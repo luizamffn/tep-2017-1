@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My second Vue app</title>
+  <script src="vue.min.js"></script>
+  <script src="axios.min.js"></script>
+  <style type="text/css">
+      .post, .pagination { width: 80%; margin: auto; }
+      .pagination {margin: 15px; text-align: center }
+      body {font-family: arial;}
+      h2 { border-bottom: 1px dotted gray; }
+      .body { text-align: justify; }
+      .user { text-align: right; font-style: italic; }
+      
+  </style>
+</head>
+<body>
+  <div id = "app">
+      <h1>Postagens</h1>
+      <div class = "post" v-for = "post in posts">
+        <div v-if = "!post.editing">
+          <h2>{{post.title}}</h2>
+          
+          <p class = "body">{{post.body}}</p>
+          <p class = "user">{{post.user}}</p>
+          <div class>
+              <button  @click = "deletePost(post)">Excluir</button> 
+              <button  @click = "editPost(post)">Editar</button> 
+          </div>
+
+        </div>         
+        <div v-else>          
+          <h2>Editando Post</h2>
+          <input width="100%" v-model = "post.title"><br>
+          <textarea v-model = "post.body" rows = "5" cols = 100></textarea><br>
+          <p class = "user">{{post.user}}</p>
+          <div>          
+              <button  @click = "confirmUpdate(post)">Atualizar</button> 
+              <button  @click = "cancelEditing(post)">Cancelar</button> 
+          </div>    
+        </div> 
+        
+      </div>
+
+      <div class="pagination">
+          <button @click="getPosts(pagination.previous)" 
+                  :disabled="!pagination.previous">
+              Previous 
+          </button>
+          <button @click="getPosts(pagination.next)" 
+                  :disabled="!pagination.next">
+              Next
+          </button>
+      </div>
+
+  </div>
+
+  <script type="text/javascript">
+    var app = new Vue({
+      el : '#app',
+      data : { 
+        posts : [],
+        pagination : {
+          count : 0,
+          next : '',
+          previous : ''          
+        }
+      },
+      mounted() {
+        this.getPosts('http://localhost:8000/posts/')
+      },
+      methods : {
+        deletePost : function(post) {
+          var index = app.posts.indexOf(post)
+          app.posts.splice(index)
+        },
+
+        deletePost : function(post) {
+          var index = app.posts.indexOf(post)
+          
+          axios.delete('http://localhost:8000/posts/'+ post.id + '/')
+            .then(function(response) {
+                app.posts.splice(index,1)      
+            })
+            .catch(e => {
+              console.log(e)
+            })
+        },
+        editPost : function(post){
+          post.editing = true
+        },
+
+        cancelEditing : function(post) {
+          post.editing = false
+        }, 
+
+        confirmUpdate : function(post) {
+          axios.put('http://localhost:8000/posts/'+ post.id +'/', post)             
+
+            .then(function(response) {
+                
+            })
+            .catch(e => {
+              console.log(e)
+            })
+            post.editing = false
+        },
+
+        getPosts : function(url) {
+          axios.get(url)
+            .then(function(response){
+              
+              response.data.results.map(function (post) {
+                post.editing = false;            
+              })
+              app.posts = response.data.results
+
+              var pagination = {
+                count : response.data.count,
+                next : response.data.next,
+                previous : response.data.previous,
+                pageSize : 5,
+                total : Math.round(response.data.count/5)
+
+
+              }
+              app.pagination = pagination
+            })
+        },
+
+      }
+      
+    })
+
+  </script>
+</body>
+</html>

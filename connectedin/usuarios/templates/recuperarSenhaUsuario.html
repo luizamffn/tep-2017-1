@@ -1,0 +1,32 @@
+{% extends "base_usuario.html" %}
+
+{% block body %}
+<form class = "form-signin"  method="post"
+	action="{% url 'recuperarSenhaUsuario' %}">
+	{% csrf_token %}
+
+	<h2 class="form-signin-heading">Recuperar Senha</h2>
+
+    <input 	name="nova_senha" id = "id_senha_nova" class = "form-control"
+			placeholder="Senha nova *" type = "password" required>
+
+    <input 	name="confirmar_senha" id = "id_senha_confirmacao" class = "form-control"
+			placeholder="Repetir a nova senha *" type = "password" required>
+
+	<hr/>
+
+	<button class="btn btn-lg btn-primary btn-block"
+			type = "submit" value="Login">Alterar Senha</button>
+
+	{% if form.errors %}
+	<div class="alert alert-danger">
+		<button type="button" class="close"
+				data-dismiss="alert" aria-hidden="true">
+		</button>
+		{{ form.non_field_errors }}
+	</div>
+	{% endif %}
+</form>
+
+
+{% endblock %}

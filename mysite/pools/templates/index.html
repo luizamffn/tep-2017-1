@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% block body %}
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong>Todos as Perguntas</strong>
+			</div>
+
+			<table class="table">
+
+				{% for q in questions %}
+				<tr>
+					<td><a href="{% url 'question' q.id %}">{{ q.question_text}}</a></td>
+					{% if q.closed %}
+						<td><a href="{% url 'resultados' q.id %}" data-toggle="tooltip" title="Visualizar Resultado">
+							<span class="glyphicon glyphicon-eye-open"/></a>
+						</td>
+					{% else %}
+						<td>
+							<span class="glyphicon glyphicon-eye-close" data-toggle="tooltip" title="Resultado não disponível"/>
+						</td>
+					{% endif %}
+					<td><a href="{% url 'manage' q.id %}" data-toggle="tooltip" title="Gerenciar">
+						<span class="glyphicon glyphicon-cog"/></a>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+
+			<!--{% if questions %}-->
+				<!---->
+			<!--{% else %}-->
+				<!--<p>Nenhuma Pergunta Cadastrada</p>-->
+			<!--{% endif %}-->
+		</div>
+	</div>
+{% endblock %}

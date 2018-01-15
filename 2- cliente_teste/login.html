@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Aluguel</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="vue.min.js"></script>
+    <script src="axios.min.js"></script>
+</head>
+<body>
+<header>
+    <nav class="blue-grey" role="navigation">
+        <div class="nav-wrapper container">
+            <a href="index.html">Aluguel</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container" id="app">
+        <div class="row center">
+            <div class="col s0 m3 l3"></div>
+
+            <div class="col s12 m6 l6">
+                <form>
+                  <div v-if="errors">
+                    <p style="color:red;">{{ errors.response.statusText }}</p>
+                  </div>
+
+                    <h4 class="main-text">Login</h4>
+                    <br>
+                    <div class="row center">
+                        <div class="col s12">
+                            <div class="input-field">
+                                <input type="text" id="id_username" v-model="username" required>
+                                <label for="id_username">Username</label>
+                            </div>
+                        </div>
+
+                        <div class="col s12">
+                            <div class="input-field">
+                                <input type="password" id="id_password" v-model="password" required>
+                                <label for="id_password">Password</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="container">
+                        <div class="row center">
+                            <button @click.prevent = "login" class="btn main-color btn-primary">Login</button>
+                        </div>
+                        <div class="row center">
+                            <a class="btn-flat main-text btn-default modal-trigger">Register</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col s0 m3 l3"></div>
+        </div>
+    </div>
+</main>
+
+<!--  Scripts-->
+<script type="text/javascript">
+    var app = new Vue({
+      el : '#app',
+      data : {
+        username: "luiza",
+        password: "l12345678",
+        errors: "", 
+        logar: false,
+        response : "",
+      },
+      mounted() {
+        console.log(this.logar)
+        console.log(this.username)
+        console.log(this.password)
+        if(this.logar == true){
+		    window.location = "funcionarios.html"
+		}
+      },
+      methods:{
+        login: function(){
+          console.log("entrou")
+          var headers = {username: this.username, password: this.password}
+          axios.post('http://localhost:8000/api-auth/',data = headers)
+            .then(function(response){
+                localStorage.setItem('token',response.data.token)
+                localStorage.setItem('username', app.username)
+                location.reload();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+      }
+    })
+</script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="static/js/materialize.js"></script>
+<script src="static/js/materialize.min.js"></script>
+<script src="static/js/init.js"></script>
+<script src="static/js/custom.js"></script>
+
+
+
+</body>
+</html>

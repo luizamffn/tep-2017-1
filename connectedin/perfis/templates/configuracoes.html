@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="col-lg-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Configurações</strong>
+		</div>
+		<ul  class="list-group">
+			<li class="list-group-item">
+				Alterar senha
+				<a href="{% url 'alterarSenha'%}" data-toggle="tooltip" title="Ir para página de alteração da senha" class="pull-right">
+                    <span class="glyphicon glyphicon-pencil"/>
+				</a>
+			</li>
+			<li class="list-group-item">
+				Desativar Perfil
+				<a href="{% url 'desativarPerfil'%}" data-toggle="tooltip" title="Desativar Perfil" class="pull-right" style="color:red">
+                    <span class="glyphicon glyphicon-remove"/>
+				</a>
+			</li>
+			<li class="list-group-item">
+				Ver Perfis bloqueados
+				<a href="{% url 'perfisBloqueados' %}" data-toggle="tooltip" title="Ver todos os perfis bloqueados" class="pull-right">
+					<span class="glyphicon glyphicon-eye-open"/>
+				</a>
+			</li>
+
+			<li class="list-group-item">
+				Meu perfil
+				<a href="{% url 'exibir' perfil_logado.id%}" data-toggle="tooltip" title="Visualizar Perfil" class="pull-right">
+					<span class="glyphicon glyphicon-eye-open"/>
+				</a>
+			</li>
+
+			{% if perfil_logado.usuario.is_superuser%}
+				<li class="list-group-item">
+					Ver Todos os Perfis
+					<a href="{% url 'todosPerfis' %}" data-toggle="tooltip" title="Ver todos os perfis" class="pull-right">
+                    	<span class="glyphicon glyphicon-eye-open"/>
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

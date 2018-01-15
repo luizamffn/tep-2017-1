@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Aluguel</title>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<script src="vue.min.js"></script>
+	<script src="axios.min.js"></script>
+</head>
+<body>
+	<nav class="blue-grey" role="navigation">
+        <div class="nav-wrapper container">
+            <a href="index.html">Aluguel</a>
+        </div>
+    </nav>
+    <div class="container" id="app">
+        <div class="row center">
+            <div class="col s0 m3 l3"></div>
+
+            <div class="col s12 m6 l6">
+                <form>
+                  <div v-if="errors">
+                    <p style="color:red;">{{ errors.response.statusText }}</p>
+                  </div>
+
+                    <h4 class="main-text">Login</h4>
+                    <br>
+                    <div class="row center">
+                        <div class="col s12">
+                            <div class="input-field">
+                                <input type="text" id="id_username" v-model="user.username" required>
+                                <label for="id_username">Username</label>
+                            </div>
+                        </div>
+
+                        <div class="col s12">
+                            <div class="input-field">
+                                <input type="password" id="id_password" v-model="user.password" required>
+                                <label for="id_password">Password</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="container">
+                        <div class="row center">
+                            <button @click.prevent = "logar_user(user)">Logar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col s0 m3 l3"></div>
+        </div>
+    </div>
+
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="static/js/materialize.js"></script>
+	<script src="static/js/materialize.min.js"></script>
+	<script src="static/js/init.js"></script>
+	<script src="static/js/custom.js"></script>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data : {
+				user : {username : "",email : ""},
+				response : "",
+				errors : "",
+				
+			},
+			mounted() {
+		        console.log(this.user.username)
+		        console.log(this.user.password)
+		        <!--console.log(localStorage.setItem('token', null))-->
+		        console.log(localStorage.getItem('token'))
+				if(localStorage.getItem('token') != 'null'){
+					window.location = "funcionarios.html"
+				}
+		     },
+			methods : {
+				logar_user : function(user){
+					axios.post("http://localhost:8000/api-token-auth/login/", {'username' : user.username, 'password' : user.password})
+					.then(function(response){
+						localStorage.setItem('token',response.data.token)
+						localStorage.setItem('username', user.username)
+						app.token = true
+						location.reload();
+					})
+					.catch(function (error) {
+					    console.log(error);
+					  });
+				}		
+			}
+		})
+	</script>
+
+</body>
+</html>

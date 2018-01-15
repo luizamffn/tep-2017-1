@@ -1,0 +1,90 @@
+{% load staticfiles %}
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <title>{{ config.title }}</title>
+</head>
+
+<body>
+
+<nav class="blue-grey darken-1" role="navigation">
+  <a href="#" class="brand-logo content">{{ config.title }}</a>
+  <ul id="slide-out" class="side-nav fixed blue-grey darken-4">
+    <li>
+      <div class="userView">
+        <div class="background">
+          <img class="responsive-img" src="{% static 'images/bg-nav.jpg' %}">
+        </div>
+        <span><img class="circle" src="{% static 'images/profile.png' %}"></span>
+        <span class="white-text name">{{ user.first_name }}</span>
+        <span class="white-text email">{{ user.email }}</span>
+      </div>
+    </li>
+    <li class="{% if config.active_class == 'index' %}active{% endif %}"><a
+        class="waves-effect white-text" href="/"><i class="material-icons white-text">home</i>Home page</a>
+    </li>
+    <li class="{% if config.active_class == 'projects' %}active{% endif %}"><a
+        class="waves-effect white-text" href="{% url 'projects' %}"><i class="material-icons white-text">today</i>Projects</a>
+    </li>
+    <li class="{% if config.active_class == 'tasks' %}active{% endif %}"><a
+        class="waves-effect white-text" href="{% url 'tasks' %}"><i class="material-icons white-text">timeline</i>Tasks</a>
+    </li>
+    <li class="{% if config.active_class == 'resources' %}active{% endif %}"><a
+        class="waves-effect white-text" href="{% url 'resources' %}"><i class="material-icons white-text">account_balance</i>Resources</a>
+    </li>
+    <li class="{% if config.active_class == 'people' %}active{% endif %}"><a class="waves-effect white-text"
+                                                                             href="{% url 'people' %}"><i
+        class="material-icons white-text">face</i>People</a></li>
+    <li><div class="divider blue-grey darken-2"></div></li>
+    <li><a class="waves-effect white-text" href="{% url 'logout' %}"><i class="material-icons white-text">close</i>Logout</a></li>
+    <!--<li><a href="{% url 'luki' %}" class="purple darken-2 amber-text text-lighten-1"><strong>Luki</strong></a></li>-->
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+</nav>
+
+{% block dialog %}
+{% endblock %}
+
+<div class="content">
+  {% block content %}
+  {% endblock %}
+</div>
+
+<footer class="page-footer blue-grey darken-2">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h5 class="white-text">Untitled Project</h5>
+        <p class="grey-text text-lighten-4">Project of the discipline of Management of Information Systems Projects.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      Copyright© 2017, Lucas R. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-mask.js' %}"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+    });
+</script>
+{% block javascript %}{% endblock %}
+
+</body>
+
+</html>

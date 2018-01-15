@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <title>Aluguel</title>
+
+    <!-- CSS  -->
+    
+    <script src="vue.min.js"></script>
+    <script src="axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+        <select class="browser-default" v-model="selected">
+            <option disabled value="">Alimento</option>
+            <option v-for="alimento in options" v-bind:value="alimento.id" >
+                {{ alimento.descricao }}
+            </option>
+        </select>
+    </div>
+
+    <script type="text/javascript">
+        let token = localStorage.getItem('token');
+        let config = {'Authorization': 'Token ' + 'd947bbd329f3b19937133e6298f1915df30e0136'};
+
+        var app = new Vue({
+            el: '#app',
+            data : {
+                selected : '1',
+                options: []
+            },
+            mounted (){
+                console.log("aki")
+                axios.get('https://nutri-api.herokuapp.com/alimentos/', {headers: config})
+                .then((response) => {
+                    console.log(response.data);
+                    this.options = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            },
+            methods : {
+                
+            }
+        })
+    </script>
+
+</body>
+</html>

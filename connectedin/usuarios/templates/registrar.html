@@ -1,0 +1,61 @@
+{% extends "base_usuario.html" %}
+
+{% block body %}
+<form class = "form-signin"  method="post" 
+	action="{% url 'registrar' %}">
+	{% csrf_token %}
+
+	<h2 class="form-signin-heading">Crie seu usuário</h2>
+	<input 	name="email" id = "id_email" class = "form-control"
+			placeholder="E-mail *" required autofocus>
+
+	<input 	name="nome" id = "id_nome" class = "form-control"
+			placeholder="Nome *" required>
+
+	<input 	name="senha" id = "id_senha" class = "form-control"
+			placeholder="Senha *" type = "password" required>
+	<hr/>
+
+	<input 	name="telefone" id = "id_telefone" class = "form-control"
+			placeholder="Telefone *" required>
+
+	<input 	name="nome_empresa" id = "id_nome_empresa" 
+			class = "form-control" placeholder="Empresa *" required>
+	<hr>
+
+	<label>Pergunta de segurança</label>
+	<select name="pergunta" class = "form-control">
+            <option value="1">Onde você nasceu?</option>
+            <option value="2">Qual é o nome da sua mãe?</option>
+            <option value="3">Qual é o nome do seu melhor amigo?</option>
+    </select>
+
+	<label for="id_resposta">Resposta de segurança</label>
+	<input name="resposta" id = "id_resposta"
+			class = "form-control" placeholder="Resposta *" required>
+
+	{% if ja_tem_adm == False%}
+	<br>
+
+	<label class="checkbox-inline">
+		<input name="administrador" type="checkbox" value="Sim">Administrador
+	</label>
+	{% endif %}
+
+	<hr/>			
+
+	<button class="btn btn-lg btn-primary btn-block"
+			type = "submit" value="Login">Registrar</button>
+
+	{% if form.errors %}		
+	<div class="alert alert-danger">
+		<button type="button" class="close"
+				data-dismiss="alert" aria-hidden="true">				
+		</button>
+		{{ form.non_field_errors }}
+	</div>		
+	{% endif %}
+</form>
+
+
+{% endblock %}

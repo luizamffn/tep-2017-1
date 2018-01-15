@@ -1,0 +1,24 @@
+{% load staticfiles %};
+<!DOCTYPE html>
+ <html lang="pt-br">
+ 	<head>
+ 		<meta http-equiv="Content -Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Question</title>
+		<link href="{% static 'styles/bootstrap.css' %}" rel="stylesheet"/>
+        <link href="{% static 'styles/main.css' %}" rel="stylesheet"/>
+ 	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				 <a href="{% url 'index' %}"><h3 class="text-muted">Perguntas</h3></a>
+			</div>
+
+			<div class="row content">
+				{% block body%}
+				{% endblock %}
+			</div>
+		</div>
+
+	</body>
+ </html>

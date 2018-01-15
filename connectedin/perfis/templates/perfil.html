@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class = "col-lg-12">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="media-left media-middle">
+					<img class="media-object pull" src="{{ perfil.imagem.url }}" width="128" height="128" >
+					<!--<a href="{% url 'alterarSenha'%}" data-toggle="tooltip" title="Alterar Foto do perfil" class="pull-right">-->
+							<!--<span class="glyphicon glyphicon-camera"/>-->
+					<!--</a>-->
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				{%if perfil_logado == perfil%}
+				<form class = "form-signin"  method="post" action="{% url 'alterarImagemPerfil' %}" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form-group">
+						<div class="input-group-btn">
+							<label for="field_image">Alterar imagem do perfil</label>
+							<input name="imagem" id="field_image" type="file" class="image-upload" name="image">
+						</div>
+						<button type="submit" class="btn">salvar</button>
+					</div>
+
+					{% if form.errors %}
+					<div class="alert alert-danger">
+						<button type="button" class="close"
+								data-dismiss="alert" aria-hidden="true">
+						</button>
+						{{ form.non_field_errors }}
+					</div>
+					{% endif %}
+				  </form>
+				{% endif %}
+			</div>
+		</div>
+
+		<h2 style="margin-top: 0px">{{ perfil.nome }}</h2>
+		<address>			
+			<a href = "mailto:{{ perfil.email }}">{{ perfil.email }}</a>
+			<br>
+			<strong>{{ perfil.nome_empresa }}</strong>
+		
+		</address>
+
+
+
+		{%if perfil_logado.usuario.is_superuser %}
+			<a href="{% url 'excluirPerfil' perfil.id %}" data-toggle="tooltip"
+			   		title="Excluir Perfil" style="font-size:20px; color: red"
+					onclick="return confirm('Você realmente deseja excluir esse perfil?')">
+				<span class="glyphicon glyphicon-remove"/>
+			</a>
+		{% endif %}
+
+		{% if perfil_logado != perfil %}
+			<center>
+			{% if bloqueio_recebido %}
+				<div class = "well-sm alert alert-danger" role="alert">Você foi bloqueado por essa pessoa!</div>
+			{% endif %}
+
+			{% if bloqueado %}
+				<div class = "well-sm alert alert-danger" role="alert">Usuário Bloqueado</div>
+				<a href="{% url 'desbloquear' perfil.id %}" style="font-size:20px"
+				   data-toggle="tooltip" title="Desbloquear"
+				   onclick="return confirm('Você realmente deseja desbloquear essa pesssoa?')" >
+					<span class="glyphicon glyphicon-ok-circle"/>
+				</a>
+			{% else %}
+				<a href="{% url 'bloquear' perfil.id %}" style="font-size:20px"
+				   data-toggle="tooltip" title="Bloquear"
+				   onclick="return confirm('Você realmente deseja bloquear essa pesssoa?')" >
+					<span class="glyphicon glyphicon-ban-circle"/>
+				</a>
+			{% endif %}
+
+			{% if ja_eh_contato %}
+				<div class = "well well-sm">Vocês já estão conectados</div>
+			{% elif ja_eh_convidado == False %}
+				{% if bloqueio_recebido == False and bloqueado == False%}
+					<a href = "{% url 'convidar' perfil.id %}" style="font-size:20px" title="Covidar">
+						<span class="glyphicon glyphicon-plus-sign"></span>
+					</a>
+				{% endif %}
+			{% elif ja_eh_convidado == True %}
+				<div class = "well well-sm">Convite enviado, aguardando aprovação!</div>
+			{% endif %}
+			</center>
+		{% endif %}
+
+		{%if ja_eh_contato or perfil_logado == perfil %}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Postagens</strong>
+				</div>
+
+				<ul  class="list-group">
+					{% with total_postagens=postagens.count %}
+						{% if total_postagens %}
+							{% for p in postagens.all %}
+								<li class="list-group-item">
+									{% if p.imagem != '' and p.imagem != None%}
+									  <div class="media-left media-middle">
+											<img class="media-object pull" src="{{p.imagem.url}}" width="128" height="128" >
+									  </div>
+									{% endif %}
+									{{ p.descricao}}
+									<br>
+									{{ p.data}}
+									{%if perfil_logado.usuario.is_superuser or p.perfil == perfil_logado %}
+										<a href="{% url 'excluirPublicacao' p.id %}" data-toggle="tooltip" title="Apagar" class="pull-right"
+											onclick="return confirm('Você realmente deseja excluir essa publicação?')">
+											<span class="glyphicon glyphicon-trash"/>
+										</a>
+									{% endif %}
+								</li>
+							{% endfor %}
+						{% else %}
+							<li class="list-group-item">
+								<p>Nenhuma postagem publicada :(</p>
+							</li>
+						{% endif %}
+					{% endwith %}
+				</ul>
+			</div>
+		{% endif %}
+
+</div>		
+{% endblock %}		

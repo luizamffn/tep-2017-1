@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../mysite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../socialNetwork" vcs="Git" />
+    <mapping directory="$USER_HOME$/Heroku/nutriApi/nutriapi" vcs="Git" />
+    <mapping directory="$USER_HOME$/Heroku/nutriapi" vcs="Git" />
+  </component>
+</project>

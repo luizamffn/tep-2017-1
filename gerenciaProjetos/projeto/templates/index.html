@@ -1,0 +1,72 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Gerencia Projetos</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'css/materialize.min.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'css/styles.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+</head>
+<body>
+<header>
+    <div class="fixed-announcement right" style="width:78%; height: 48px;">
+        <div class="announcement">
+            {% block body%}
+	        {% endblock %}
+        </div>
+    </div>
+    </div>
+
+    <ul id="slide-out" class="side-nav fixed" style="overflow: auto; transform: translateX(0px)">
+        <li>
+            <div class="user-view pink darken-4">
+                <!--<div class="background">-->
+                <!--<img src="{% static 'img/teste2.jpg'%}">-->
+                <!--</div>-->
+                <a href="#!user"><img class="circle" src="{% static 'img/user.jpg'%}"></a>
+                <a href="#!name"><span class="white-text name">{{user.username}}</span></a>
+                <a href="#!email"><span class="white-text email">{{user.email}}</span></a>
+                <a class="right-align" href="{% url 'logout'%}"><span class="white-text email">Sair</span></a>
+            </div>
+        </li>
+        <li><a href="{% url 'projeto'%}"><i class="material-icons">today</i>Projeto</a></li>
+        <li><a href="{% url 'atividade'%}"><i class="material-icons">timeline</i>Atividades</a></li>
+        <li><a href="#!"><i class="material-icons">account_balance</i>Recursos</a></li>
+        <li><a href="{% url 'pessoa'%}"><i class="material-icons">face</i>Pessoas</a></li>
+    </ul>
+
+    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+</header>
+</body>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script src="{% static 'js/materialize.min.js' %}"></script>
+<script src="{% static 'js/init.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+    <!--$(document).ready(function(){-->
+      <!--$('.carousel').carousel();-->
+    <!--});-->
+
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+
+    <!--&lt;!&ndash;$(document).ready(function(){&ndash;&gt;-->
+      <!--&lt;!&ndash;$('[name=telefone]').mask('(00) 0000-0000');&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--$(document).ready(function(){-->
+      <!--// the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered-->
+      <!--$('.modal').modal();-->
+    <!--});-->
+  </script>
+</html>

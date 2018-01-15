@@ -1,0 +1,27 @@
+{% extends 'base_not_auth.html'%}
+{% block body %}
+<div class="row">
+    <div class="col s12 m12 l12">
+        <div class="row">
+            <div class="col s3 m4 l4"></div>
+            <div class="col s6 m4 l4">
+                <table style="height:30em">
+                    <tbody>
+                    <tr>
+                        <td class="centralizar">
+                            <a href="{% url 'list_filmes_not_auth'%}"
+                               class="btn-floating btn-large waves-effect waves-light blue-grey lighten-1">
+                                <i class="material-icons">disc_full</i>
+                            </a>
+                            <br>Filmes
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col s3 m4 l4"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

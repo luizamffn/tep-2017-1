@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col s12">
+    <table class="highlight">
+
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      {% if projects %}
+      {% for project in projects %}
+      <tr>
+        <td><a class="black-text" href="{% url 'project_detail' project.id %}">{{project.name}}</a></td>
+        <td><a class="black-text" href="{% url 'project_detail' project.id %}">{{project.start_date}}</a></td>
+        <td><a class="black-text" href="{% url 'project_detail' project.id %}">{{project.end_date}}</a></td>
+        <td class="row vallign right-align"><a href="{% url 'delete_project' project.id %}"
+                                               class="btn-flat img-btn tooltipped" data-position="bottom"
+                                               data-delay="50"
+                                               data-tooltip="Delete"><i class="material-icons red-text">delete</i></a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <td colspan="4" class="center">Nothing to show.</td>
+      {% endif %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="fixed-action-btn horizontal">
+  <a class="btn-floating btn-large blue modal-trigger" href="#new_project">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+<div id="new_project" class="modal">
+  <div class="modal-content">
+    <h4 class="center main-text">Start new project</h4>
+    <form action="{% url 'new_project' %}" class="form-signin" role="form" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s12">
+            <input name="name" id="name" type="text" required>
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field col s12">
+            <textarea id="description" name="description" class="materialize-textarea"></textarea>
+            <label for="description">Description</label>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field col s6">
+            <input class="datepicker" name="start_date" id="start_date" type="text" value="{{ value|date:'Y-m-d' }}"
+                   required>
+            <label for="start_date">Start date</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input class="datepicker" name="end_date" id="end_date" type="text" value="{{ value|date:'Y-m-d' }}"
+                   required>
+            <label for="end_date">End date</label>
+          </div>
+        </div>
+        <div class="input-field col s12 center">
+          <button class="btn waves-effect waves-light main-color" type="submit" name="action">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

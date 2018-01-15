@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Teste Vue</title>
+	<script src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input v-model="message">
+		
+		<p>{{message}}</p>
+		<hr>
+
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }} // Percent concluded: {{todo.percent}} %
+			</li>
+		</ol>
+		<hr>
+
+		<p>{{votes}}</p>
+		<button @click = "upvote">Vote</button>
+
+
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data : {
+				votes : 0,	
+				message : "hello vue",
+				todos: [
+					{ 	
+						id : 1,
+						text : 'Limpar grama',
+						percent : 50 
+					},
+					{ 
+						id : 2,
+						text : 'Fazer Compras',
+						percent : 30 
+					},
+					{ 
+						id : 3,
+						text : 'Estudar para prova',
+						percent : 20 
+					}
+				]
+			},
+			methods : {
+				upvote : function(){
+					this.votes++
+				}
+			}
+		})
+	</script>
+
+	
+
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cadastrar Usuário</title>
+	<script src="vue.min.js"></script>
+	<script src="axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<form>
+			<input v-model = "user.name" paceholder="Username">
+			<input v-model = "user.email" paceholder="E-mail">
+			<br>
+			<button @click.prevent = "cadastrarUsuario">Cadastrar</button>
+		</form>
+		<p v-if = "response">
+			{{ response.status }} / {{ response.statusText }}
+		</p>
+		<p v-if = "errors" class = "erros">
+			{{ errors.response.data }}
+		</p>
+
+		<!--{{errors}} -->
+
+
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data : {
+				user : {name : "",email : ""},
+				response : "",
+				errors : ""
+			},
+			methods : {
+				cadastrarUsuario : function(){
+					axios.post("http://localhost:8000/users/", app.user)
+					.then(function(response){
+						app.response = response
+					})
+					.catch(e => {
+						app.errors = e
+					})
+				}	
+			}
+		})
+	</script>
+
+	
+
+
+</body>
+</html>

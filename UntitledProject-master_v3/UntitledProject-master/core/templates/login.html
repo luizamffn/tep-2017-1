@@ -1,0 +1,136 @@
+{% load staticfiles %}
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <title>Login to Untitled Project</title>
+</head>
+
+<body>
+
+<nav class="blue-grey darken-1" role="navigation">
+  <a href="/" class="brand-logo center">Untitled Project</a>
+</nav>
+
+{% block dialog %}
+{% endblock %}
+
+<div class="container">
+  <div class="row center">
+    <div class="col s0 m3 l3"></div>
+
+    <div class="col s12 m6 l6">
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <h4 class="main-text">Login</h4>
+        <br>
+        <div class="row center">
+          <div class="col s12">
+            <div class="input-field">
+              <input type="text" id="id_username" name="username" required>
+              <label for="id_username">Username</label>
+            </div>
+          </div>
+
+          <div class="col s12">
+            <div class="input-field">
+              <input type="password" id="id_password" name="password" required>
+              <label for="id_password">Password</label>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="container">
+          <div class="row center">
+            <button type="submit" class="btn main-color btn-primary" value="Login">Login</button>
+          </div>
+          <div class="row center">
+            <a href="#new_user" class="btn-flat main-text btn-default modal-trigger">Register</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col s0 m3 l3"></div>
+  </div>
+</div>
+
+<div id="new_user" class="modal">
+  <div class="modal-content">
+    <h4 class="center main-text">Create new User</h4>
+    <form action="{% url 'register' %}" method="post">
+      {% csrf_token %}
+      <div class="row center">
+        <div class="col s12 m6">
+          <div class="input-field">
+            <input type="text" id="name" name="name" required>
+            <label for="name">Name</label>
+          </div>
+        </div>
+
+        <div class="col s12 m6">
+          <div class="input-field">
+            <input type="email" id="email" name="email" required>
+            <label for="email">E-mail</label>
+          </div>
+        </div>
+      </div>
+
+      <fieldset>
+        <legend class="grey-text"></legend>
+        <div class="row center">
+          <div class="col s12 m6">
+            <div class="input-field">
+              <input type="text" id="username" name="username" required>
+              <label for="username">Username</label>
+            </div>
+          </div>
+
+          <div class="col s12 m6">
+            <div class="input-field">
+              <input type="password" id="password" name="password" required>
+              <label for="password">Password</label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <br>
+      <div class="container">
+        <div class="row center">
+          <button type="submit" class="btn main-color btn-primary">Register</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer class="page-footer blue-grey darken-2" style="padding-left: 0px !important">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h5 class="white-text">Untitled Project</h5>
+        <p class="grey-text text-lighten-4">Project of the discipline of Management of Information Systems Projects.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      Copyright© 2017, Lucas R. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-mask.js' %}"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+{% block javascript %}{% endblock %}
+
+</body>
+
+</html>

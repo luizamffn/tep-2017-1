@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col s12">
+    <table class="highlight">
+
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Project</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      {% if resources %}
+      {% for resource in resources %}
+      <tr>
+        <td><a class="black-text" href="{% url 'resource_detail' resource.id %}">{{resource.name}}</a></td>
+        <td><a class="black-text" href="{% url 'resource_detail' resource.id %}">$ {{resource.value}}</a></td>
+        <td><a class="black-text" href="{% url 'resource_detail' resource.id %}">{{resource.project.name}}</a></td>
+        <td class="row vallign right-align"><a href="{% url 'delete_resource' resource.id %}"
+                                               class="btn-flat img-btn tooltipped" data-position="bottom"
+                                               data-delay="50"
+                                               data-tooltip="Delete"><i class="material-icons red-text">delete</i></a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <td colspan="4" class="center">Nothing to show.</td>
+      {% endif %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="fixed-action-btn horizontal">
+  <a class="btn-floating btn-large blue modal-trigger" href="#new_resource">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+<div id="new_resource" class="modal">
+  <div class="modal-content">
+    <h4 class="center main-text">Create new resource</h4>
+    <form action="{% url 'new_resource' %}" class="form-signin" role="form" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s12">
+            <input name="name" id="name" type="text" required>
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field col s6">
+            <input name="value" id="value" type="number" required>
+            <label for="value">Value</label>
+          </div>
+
+          <div class="input-field col s6">
+            <select name="project_id" required>
+              {% for project in projects %}
+              <option value="{{project.id}}">{{project.name}}</option>
+              {% endfor %}
+            </select>
+            <label>Project</label>
+          </div>
+        </div>
+        <div class="input-field col s12 center">
+          <button class="btn waves-effect waves-light main-color" type="submit" name="action">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

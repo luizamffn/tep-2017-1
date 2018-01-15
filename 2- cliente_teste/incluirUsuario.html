@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cadastrar Usuário</title>
+	<script src="vue.min.js"></script>
+	<script src="axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<form>
+			<input v-model = "user.name" paceholder="Username">
+			<input v-model = "user.password" paceholder="Password" type="password">
+			<br>
+			<button @click.prevent = "cadastrarUsuario">Cadastrar</button>
+			<button @click.prevent = "logar_user(user)">Logar</button>
+
+		</form>
+		<p v-if = "response">
+			{{ response.status }} / {{ response.statusText }}
+		</p>
+		<p v-if = "errors" class = "erros">
+			{{ errors.response.data }}
+		</p>
+
+		<!--{{errors}} -->
+
+
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data : {
+				user : {name : "",email : ""},
+				response : "",
+				errors : ""
+			},
+			methods : {
+				cadastrarUsuario : function(){
+					axios.post("http://localhost:8000/users/", app.user)
+					.then(function(response){
+						app.response = response
+					})
+					.catch(e => {
+						app.errors = e
+					})
+				},
+				logar_user : function(user){
+					axios.post("http://localhost:8000/api-token-auth/login/", {'username' : user.name, 'password' : user.password})
+					.then(function(response){
+						app.response = response
+					})
+					.catch(function (error) {
+					    console.log(error);
+					  });
+				}		
+			}
+		})
+	</script>
+
+	
+
+
+</body>
+</html>

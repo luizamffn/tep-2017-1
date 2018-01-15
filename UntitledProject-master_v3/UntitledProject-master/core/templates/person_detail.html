@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4 class="main-text center">{{ person.name }}</h4>
+<div class="row">
+  <div class="col s6">
+    <div class="input-field">
+      <input disabled type="text" class="black-text" id="function" value="{{person.function}}">
+      <label for="function" class="main-text">Function</label>
+    </div>
+  </div>
+  <div class="col s6">
+    <div class="input-field">
+      <input disabled type="text" class="black-text" id="salary" value="{{person.salary}}">
+      <label for="salary" class="main-text">Salary</label>
+    </div>
+  </div>
+
+  <div class="col s12 m12">
+    <table class="centered">
+      <thead>
+      <tr>
+        <th colspan="5">Activities</th>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Project</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      {% for activity in activities %}
+      <tr>
+        <td>{{ activity.name}}</td>
+        <td> A definir</td>
+        <td>{{activity.project.name}}</td>
+        <td>{{activity.start}}</td>
+        <td>{{activity.end}}</td>
+      </tr>
+      {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col s12 center">
+    <br>
+    <a href="{% url 'people' %}" class="btn waves-effect waves-light main-color">Back</a>
+    <br>
+  </div>
+
+</div>
+{% endblock %}
